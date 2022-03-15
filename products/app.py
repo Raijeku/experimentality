@@ -1,7 +1,7 @@
 from distutils.log import debug
 from flask import Flask, request
-from models.product import Product
-from resources import methods
+from .models.product import Product
+from .resources import methods
 
 app = Flask(__name__)
 
