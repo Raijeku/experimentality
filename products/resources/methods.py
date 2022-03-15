@@ -15,14 +15,6 @@ def db_connection() -> sqlite3.Connection:
         print(e)
     return conn
 
-def convert_to_image(filename: str) -> str:
-    with open(filename, 'rb') as file:
-        return file.read()
-    
-def convert_to_file(image, filename: str):
-    with open(filename, 'wb') as file:
-        file.write(image)
-
 def downscale_image(image_path: str) -> bytes:
     image = Image.open(image_path)
     scale = 1
@@ -57,7 +49,6 @@ def post_products(name: str, description: str, price: float, discount: float, im
 
         images = [downscale_image(image) for image in images]
 
-        #images = [convert_to_image(image) for image in images]
         sql = """INSERT INTO Image (product_id, data)
                 VALUES (?, ?)"""
         for image in images:
