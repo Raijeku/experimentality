@@ -1,7 +1,8 @@
 import json
 
-class Image:
-    def __init__(self, product_id, data):
+class ProductImage:
+    def __init__(self, id, product_id, data):
+        self.id = id
         self.product_id = product_id
         self.data = data
 

@@ -6,6 +6,7 @@ from PIL import Image
 from sympy import dsolve
 
 from models.product import Product
+from models.image import ProductImage
 
 def db_connection() -> sqlite3.Connection:
     conn = None
@@ -74,8 +75,19 @@ def get_products() -> str:
 
     cursor = conn.execute("SELECT * FROM Product")
     elems = cursor.fetchall()
-    products = [Product(elem[1], elem[2], elem[3], elem[4], elem[5], elem[6]) for elem in elems]
+
+    products = [Product(elem[0], elem[1], elem[2], elem[3], elem[4], elem[5], elem[6]) for elem in elems]
     return json.dumps([product.__dict__ for product in products])
+
+def get_images() -> str:
+    conn = db_connection()
+    cursor = conn.cursor()
+
+    cursor = conn.execute("SELECT * FROM Image")
+    images = cursor.fetchall()
+
+    images = [ProductImage(image[0], image[1], image[2].decode("utf-8", "ignore")) for image in images]
+    return json.dumps([image.__dict__ for image in images])
 
 def get_most_searched(amount: int) -> str:
     conn = db_connection()
@@ -83,8 +95,24 @@ def get_most_searched(amount: int) -> str:
 
     cursor = conn.execute("SELECT * FROM Product")
     elems = cursor.fetchall()
-    products = [Product(elem[1], elem[2], elem[3], elem[4], elem[5], elem[6]) for elem in elems]
+    products = [Product(elem[0], elem[1], elem[2], elem[3], elem[4], elem[5], elem[6]) for elem in elems]
     sorted_products = sorted(products, key=lambda x: x.searches, reverse=True)
     if amount > 1: sorted_products = sorted_products[:amount]
-    return json.dumps([product.__dict__ for product in sorted_products])
+    products_dict = [product.__dict__ for product in sorted_products]
+    
+    sql = "SELECT * FROM Image where product_id in ({0})".format(','.join(['?']*amount))
+    cursor.execute(sql, [product_dict['id'] for product_dict in products_dict])
+    images = cursor.fetchall()
+
+    images = [ProductImage(image[0], image[1], image[2].decode("utf-8", "ignore")) for image in images]
+    images_dict = [image.__dict__ for image in images]
+
+    for product_dict in products_dict:
+        product_dict['images'] = []
+        del product_dict['country']
+        del product_dict['searches']
+        for image_dict in images_dict:
+            if product_dict['id'] == image_dict['product_id'] and len(product_dict['images']) <= 2: product_dict['images'].append(image_dict)
+
+    return json.dumps(products_dict)
 

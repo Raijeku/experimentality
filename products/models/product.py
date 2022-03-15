@@ -1,12 +1,12 @@
 import json
 
 class Product:
-    def __init__(self, name, description, price, discount, images, country, searches):
+    def __init__(self, id, name, description, price, discount, country, searches):
+        self.id = id
         self.name = name
         self.description = description
         self.price = price
         self.discount = discount
-        self.images = images
         self.country = country
         self.searches = searches
 

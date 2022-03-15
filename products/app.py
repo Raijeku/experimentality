@@ -25,7 +25,11 @@ def products():
 
         return methods.post_products(name, description, price, discount, images, country, searches)
 
-@app.route('/most_searched/<amount>')
+@app.route('/images', methods=['GET'])
+def images():
+    return methods.get_images()
+
+@app.route('/most_searched/<int:amount>')
 def most_searched(amount):
     return methods.get_most_searched(int(amount))
 
