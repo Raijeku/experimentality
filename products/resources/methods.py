@@ -3,7 +3,6 @@ import sqlite3
 import json
 from typing import List
 from PIL import Image
-from sympy import dsolve
 
 from ..models.product import Product
 from ..models.image import ProductImage
