@@ -16,3 +16,5 @@ python db.py
 ```
 flask run
 ```
+
+Se puede acceder a la API por medio de Heroku en: https://experimentality-prueba.herokuapp.com/

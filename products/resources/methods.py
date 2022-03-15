@@ -10,7 +10,7 @@ from ..models.image import ProductImage
 def db_connection() -> sqlite3.Connection:
     conn = None
     try:
-        conn = sqlite3.connect('products.sqlite')
+        conn = sqlite3.connect('products/products.sqlite')
     except sqlite3.error as e:
         print(e)
     return conn
@@ -40,9 +40,9 @@ def downscale_image(image_path: str) -> bytes:
 
 def post_products(name: str, description: str, price: float, discount: float, images: List[str], country: str, searches: int) -> str:
     valid = True
-    if (country == 'Colombia' or country == 'Mexico') and discount > 0.5:
+    if (country == 'Colombia' or country == 'Mexico') and float(discount) > 0.5:
         valid = False
-    if (country == 'Chile' or country == 'Peru') and discount >= 0.3:
+    if (country == 'Chile' or country == 'Peru') and float(discount) >= 0.3:
         valid = False
     if valid:
         conn = db_connection()

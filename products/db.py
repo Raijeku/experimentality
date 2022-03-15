@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("products.sqlite")
+conn = sqlite3.connect("products/products.sqlite")
 
 cursor = conn.cursor()
 sql_query = """ CREATE TABLE Product (
