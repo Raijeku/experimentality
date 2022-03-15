@@ -106,3 +106,13 @@ Recupera los productos más buscados de acuerdo a una cantidad específica de pr
 }
 
 ```
+
+***
+
+### Pruebas unitarias
+
+Para hacer pruebas usar el comando:
+
+```
+python -m unittest tests/test_product.py
+```
