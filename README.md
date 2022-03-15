@@ -19,6 +19,7 @@ Los paquetes se pueden instalar por separado también, con los más importantes 
 ### Cómo correr el proyecto:
 
 1. Establecer la ubicación de la aplicación de Flask:
+
 En windows:
 ```
 set FLASK_APP=products.app
@@ -48,22 +49,60 @@ flask run
 GET /products
 ```
 
-Recupera todos los productos registrados actualmente.
+Recupera todos los productos registrados actualmente. Retorna los productos en formato JSON como se muestra a continuación:
+
+```
+{
+    "id": 1,
+    "name": "Shirt",
+    "description": "Gray",
+    "price": 10.0,
+    "discount": 0.4,
+    "country": "Colombia",
+    "searches": 9
+}
+```
 
 ```
 POST /products
 ```
 
-Crea un nuevo producto con sus imágenes.
+Crea un nuevo producto con imágenes.
 
 ```
 GET /images
 ```
 
-Recupera todas las imágenes registradas actualmente.
+Recupera todas las imágenes registradas actualmente. Retorna las imágenes en formato JSON como se muestra a continuación:
+
+```
+{
+    "id": 1,
+    "product_id": 1,
+    "data": qwertyuiop...
+}
+```
 
 ```
 GET /most_searched/<int:amount>
 ```
 
-Recupera los productos más buscados de acuerdo a una cantidad específica de productos, retornados en orden descendente desde mayor buscado a menor buscado.
+Recupera los productos más buscados de acuerdo a una cantidad específica de productos, retornados en orden descendente desde mayor buscado a menor buscado. Retorna los productos más buscados con imágenes en formato JSON como se muestra a continuación:
+
+```
+{
+    "id": 3,
+    "name": "Jeans",
+    "description": "Blue",
+    "price": 40.0,
+    "discount": 0.4,
+    "images": [
+        {
+            "id": 4,
+            "product_id": 3,
+            "data": qwertyuiop...
+        }
+    ]
+}
+
+```
