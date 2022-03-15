@@ -19,7 +19,7 @@ def products():
         description = request.form['description']
         price = request.form['price']
         discount = request.form['discount']
-        images = request.form['images']
+        images = request.form.getlist('images')
         country = request.form['country']
         searches = request.form['searches']
 
