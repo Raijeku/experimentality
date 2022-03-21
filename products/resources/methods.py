@@ -1,3 +1,8 @@
+"""Module that stores all the methods used in the API.
+
+This module works as the controller of the API and connects to the database.
+"""
+
 import io
 import sqlite3
 import json
@@ -8,6 +13,7 @@ from ..models.product import Product
 from ..models.image import ProductImage
 
 def db_connection() -> sqlite3.Connection:
+    """Connects to the database or creates it."""
     conn = None
     try:
         conn = sqlite3.connect('products/products.sqlite')

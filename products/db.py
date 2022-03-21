@@ -1,3 +1,8 @@
+"""Database creation script.
+
+This script contains the code used to create the Products databse and the tables that will be used.
+"""
+
 import sqlite3
 
 conn = sqlite3.connect("products/products.sqlite")
