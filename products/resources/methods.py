@@ -22,6 +22,12 @@ def db_connection() -> sqlite3.Connection:
     return conn
 
 def downscale_image(image_path: str) -> bytes:
+    """Scales down image to make the longest dimension equal to 1024 pixels, maintaining the same proportion 
+    and saving the scaled image as a .jpeg file.
+    
+    Args:
+        image_path: Path of the image inside the user's directory.
+    """
     image = Image.open(image_path)
     scale = 1
     size = image.size
@@ -37,6 +43,17 @@ def downscale_image(image_path: str) -> bytes:
 
 
 def post_products(name: str, description: str, price: float, discount: float, images: List[str], country: str, searches: int) -> str:
+    """Validates and adds a product to the database.
+    
+    Args:
+        id: Identification for the product.
+        name: Name of the product.
+        description: Description of the product.
+        price: Normal price of the product.
+        discount: Discount percentage of the product.
+        country: Country where the product is available.
+        searches: Number of searches made for that product.
+    """
     valid = True
     if (country == 'Colombia' or country == 'Mexico') and float(discount) > 0.5:
         valid = False
@@ -66,6 +83,7 @@ def post_products(name: str, description: str, price: float, discount: float, im
         return 'Descuento no adecuado.'
 
 def get_products() -> str:
+    """Retrieves all the products from the database."""
     conn = db_connection()
     cursor = conn.cursor()
 
@@ -76,6 +94,7 @@ def get_products() -> str:
     return json.dumps([product.__dict__ for product in products])
 
 def get_images() -> str:
+    """Retrieves all the images from the database."""
     conn = db_connection()
     cursor = conn.cursor()
 
@@ -86,6 +105,11 @@ def get_images() -> str:
     return json.dumps([image.__dict__ for image in images])
 
 def get_most_searched(amount: int) -> str:
+    """Retrieves the most searched products up to a number specified by the amount parameter.
+    
+    Args:
+        amount: The number of products to be returned as the most search products.
+    """
     conn = db_connection()
     cursor = conn.cursor()
 
